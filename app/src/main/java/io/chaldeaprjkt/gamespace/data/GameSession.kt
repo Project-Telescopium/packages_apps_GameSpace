@@ -57,13 +57,9 @@ class GameSession @Inject constructor(
         state = SessionState(
             packageName = sessionName,
             autoBrightness = systemSettings.autoBrightness,
-            headsUp = systemSettings.headsUp,
             ringerMode = audioManager.ringerModeInternal,
             adbEnabled = systemSettings.adbEnabled,
         )
-        if (appSettings.noHeadsUp) {
-            systemSettings.headsUp = false
-        }
         if (appSettings.noAutoBrightness) {
             systemSettings.autoBrightness = false
         }
@@ -77,9 +73,6 @@ class GameSession @Inject constructor(
 
     fun unregister() {
         val orig = state?.copy() ?: return
-        if (appSettings.noHeadsUp) {
-            orig.headsUp?.let { systemSettings.headsUp = it }
-        }
         if (appSettings.noAutoBrightness) {
             orig.autoBrightness?.let { systemSettings.autoBrightness = it }
         }
